@@ -1,6 +1,11 @@
 services:
   back:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DOCKER_GID=${DOCKER_GID}
+        - DOCKER_UID=${DOCKER_UID}
     command: sleep infinity # コンテナを終了させない
     # command: python manage.py runserver 0.0.0.0:8000
     volumes:

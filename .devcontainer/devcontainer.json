@@ -1,0 +1,42 @@
+{
+    "name": "Django Backend",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "back",
+    "workspaceFolder": "/app",
+    "postCreateCommand": "bash -c 'mkdir -p /home/appuser/.ssh && chmod 700 /home/appuser/.ssh && if [ ! -f /home/appuser/.ssh/id_rsa ]; then ssh-keygen -t rsa -b 4096 -N \"\" -f /home/appuser/.ssh/id_rsa; fi && eval $(ssh-agent -s) && ssh-add /home/appuser/.ssh/id_rsa'",
+    // "postStartCommand": "pip install -r requirements.txt",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "mhutchie.git-graph",
+                "KnisterPeter.vscode-github",
+                "eamodio.gitlens",
+                "snowcrash30.printtimestamp",
+                "Gruntfuggly.todo-tree",
+                "ms-python.python",
+                "ms-python.debugpy",
+                "donjayamanne.python-extension-pack",
+                "ms-python.black-formatter"
+            ],
+            "launch": {
+                "version": "0.2.0",
+                "configurations": [
+                    {
+                        "name": "Python: Django in Docker",
+                        "type": "python",
+                        "request": "attach",
+                        "port": 5678,
+                        "host": "localhost",
+                        "pathMappings": [
+                            {
+                                "localRoot": "${workspaceFolder}",
+                                "remoteRoot": "/app"
+                            }
+                        ],
+                        "django": true
+                    }
+                ]
+            }
+        }
+    }
+  }
