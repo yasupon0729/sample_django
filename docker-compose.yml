@@ -1,0 +1,12 @@
+services:
+  back:
+    build: .
+    command: sleep infinity # コンテナを終了させない
+    # command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    user: "${DOCKER_UID}:${DOCKER_GID}"
+    tty: true
+    stdin_open: true
