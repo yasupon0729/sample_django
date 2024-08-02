@@ -16,7 +16,8 @@ RUN pip install -r requirements.txt
 
 # 新しいユーザーを作成し、必要な権限を付与
 RUN useradd -m appuser && chown -R appuser:appuser /app
-USER appuser
+RUN mkdir -p /home/appuser/.ssh && chown -R appuser:appuser /home/appuser/.ssh && chmod 700 /home/appuser/.ssh
 
-# ローカルディレクトリをdocker内にコピー
-# COPY . /app/
+# GitHubのホストキーをコンテナ内に追加
+RUN ssh-keyscan github.com >> /home/appuser/.ssh/known_hosts
+USER appuser

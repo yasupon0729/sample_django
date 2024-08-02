@@ -5,8 +5,13 @@ services:
     # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
+      - ~/.ssh:/home/appuser/.ssh #ホストのSSHキーをコンテナにマウント
+      - ~/.gitconfig:/home/appuser/.gitconfig:ro #ホストのGit設定をコンテナにマウント
     ports:
       - "8000:8000"
     user: "${DOCKER_UID}:${DOCKER_GID}"
     tty: true
     stdin_open: true
+    environment:
+      #SSHの厳密なホストキーチェックを無効に
+      - GIT_SSH_COMMAND=ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
