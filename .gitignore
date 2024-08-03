@@ -1,2 +1,2 @@
 **/logs/**/*
-**/.env.prod/**/*
+src/secrets/.env.dev
