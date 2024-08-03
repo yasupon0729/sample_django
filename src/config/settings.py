@@ -28,7 +28,7 @@ root = environ.Path(BASE_DIR / "secrets")  # type: ignore
 # 本番環境用
 # env.read_env(root.path(".env.prod"))
 # 開発環境用
-env.read_env(root.path(".env.dev"))
+env.read_env(str(root.path(".env.dev")))
 
 
 # Quick-start development settings - unsuitable for production

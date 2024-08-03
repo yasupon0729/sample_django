@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DOCKER_UID=${DOCKER_UID}
 ENV DOCKER_GID=${DOCKER_GID}
 
+
 # docker内の作業ディレクトリを設定
 WORKDIR /app
 
@@ -37,3 +38,4 @@ RUN chmod 700 /home/appuser/.ssh
 RUN ssh-keyscan github.com >> /home/appuser/.ssh/known_hosts
 # ユーザーを変更する。 appuserに変更する
 USER appuser
+
