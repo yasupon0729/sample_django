@@ -16,7 +16,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from base.views.item_views import IndexListView, ItemDetailView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls, name="admin"),
+    # Items
+    path("items/<str:pk>/", ItemDetailView.as_view(), name="item"),
+    # Top page
+    path(
+        "", IndexListView.as_view(), name="index"
+    ),  # top page クラスビューの場合は、as_view()をつける
 ]
