@@ -1,3 +1,6 @@
+# FIXME: めんどくさいので、いったん型は無視する
+# type: ignore
+
 """
 Django settings for config project.
 
@@ -12,21 +15,32 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+import environ  # 環境変数の読み込み
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+root = environ.Path(BASE_DIR / "secrets")  # type: ignore
+
+# FIXME: 環境変数をどのように読み込むか要確認する
+# 本番環境用
+# env.read_env(root.path(".env.prod"))
+# 開発環境用
+env.read_env(root.path(".env.dev"))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY: str = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG: bool = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list[str] = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
