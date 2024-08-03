@@ -139,3 +139,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_FILE_DIRS = [BASE_DIR / "static"]  # 追加
+
+# 消費税
+TAX_RATE = 0.1
