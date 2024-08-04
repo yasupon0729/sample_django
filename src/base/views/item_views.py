@@ -1,29 +1,44 @@
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from base.models import Item
-
-
-from config.logger import get_logger
-
-logger = get_logger("base.views.item_views")
+from base.models import Item, Category, Tag
 
 
 class IndexListView(ListView):
-    """アイテム一覧取得"""
-
-    # 変数をオーバーライド
     model = Item
     template_name = "pages/index.html"
-    context_object_name = "object_list"
-
-    # override
-    def get(self, request, *args, **kwargs):
-        logger.debug("IndexListView get")
-        return super().get(request, *args, **kwargs)
+    queryset = Item.objects.filter(is_published=True)
 
 
 class ItemDetailView(DetailView):
-    """個別のアイテムの取得"""
-
     model = Item
     template_name = "pages/item.html"
-    context_object_name = "object"
+
+
+class CategoryListView(ListView):
+    model = Item
+    template_name = "pages/list.html"
+    paginate_by = 2
+
+    def get_queryset(self):
+        self.category = Category.objects.get(slug=self.kwargs["pk"])
+        return Item.objects.filter(is_published=True, category=self.category)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = f"Category #{self.category.name}"
+        return context
+
+
+class TagListView(ListView):
+    model = Item
+    template_name = "pages/list.html"
+    paginate_by = 2
+
+    def get_queryset(self):
+        self.tag = Tag.objects.get(slug=self.kwargs["pk"])
+        return Item.objects.filter(is_published=True, tags=self.tag)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = f"Tag #{self.tag.name}"
+        return context

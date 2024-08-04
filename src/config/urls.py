@@ -12,8 +12,8 @@ urlpatterns = [
     path("account/", views.AccountUpdateView.as_view()),
     path("profile/", views.ProfileUpdateView.as_view()),
     # Order
-    path("orders/<str:pk>/", views.OrderDetailView.as_view()),  # type: ignore
-    path("orders/", views.OrderIndexView.as_view()),  # type: ignore
+    path("orders/<str:pk>/", views.OrderDetailView.as_view()),
+    path("orders/", views.OrderIndexView.as_view()),
     # Pay
     path("pay/checkout/", views.PayWithStripe.as_view()),
     path("pay/success/", views.PaySuccessView.as_view()),
@@ -24,5 +24,7 @@ urlpatterns = [
     path("cart/", views.CartListView.as_view()),  # カートページ
     # Items
     path("items/<str:pk>/", views.ItemDetailView.as_view()),
+    path("categories/<str:pk>/", views.CategoryListView.as_view()),
+    path("tags/<str:pk>/", views.TagListView.as_view()),
     path("", views.IndexListView.as_view()),  # トップページ
 ]
