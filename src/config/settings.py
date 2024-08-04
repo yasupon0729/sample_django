@@ -142,3 +142,6 @@ STATIC_FILE_DIRS = [BASE_DIR / "static"]  # 追加
 
 # 消費税
 TAX_RATE = 0.1
+
+STRIPE_API_SECRET_KEY = str(env.str("STRIPE_API_SECRET_KEY"))
+MY_URL = str(env.str("MY_URL"))
