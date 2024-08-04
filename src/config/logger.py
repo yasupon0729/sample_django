@@ -5,6 +5,7 @@ from logging.handlers import RotatingFileHandler
 import os
 import sys
 from threading import Lock
+from typing import Any
 
 # 現在の実装は、基本的に複数のクライアントからのアクセスに対応できます。以下の理由から：
 # シングルトンパターンを使用しているため、同じプロセス内で複数のロガーインスタンスが作成されることを防いでいます。
@@ -19,7 +20,7 @@ from threading import Lock
 
 
 class SingletonMeta(type):
-    _instances = {}
+    _instances: dict[Any, Any] = {}
     _lock: Lock = Lock()
 
     def __call__(cls, *args, **kwargs):

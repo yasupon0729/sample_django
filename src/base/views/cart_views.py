@@ -4,12 +4,16 @@ from django.conf import settings
 from django.views.generic import View, ListView
 from base.models import Item
 from collections import OrderedDict
+from typing_extensions import override
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
-class CartListView(ListView):
+class CartListView(LoginRequiredMixin, ListView):
     model = Item
     template_name = "pages/cart.html"
 
+    @override
     def get_queryset(self):
         cart = self.request.session.get("cart", None)
         if cart is None or len(cart) == 0:
@@ -39,7 +43,7 @@ class CartListView(ListView):
         return context
 
 
-class AddCartView(View):
+class AddCartView(LoginRequiredMixin, View):
 
     #     # # getメソッドではトップへリダイレクトする場合はこのようにかけます。
     #     # def get(self, request):
@@ -60,6 +64,7 @@ class AddCartView(View):
         return redirect("/cart/")
 
 
+@login_required
 def remove_from_cart(request, pk):
     """かーとの商品削除
 

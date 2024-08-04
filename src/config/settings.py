@@ -24,7 +24,6 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 env = environ.Env()
 root = environ.Path(BASE_DIR / "secrets")  # type: ignore
 
-# FIXME: 環境変数をどのように読み込むか要確認する
 # 本番環境用
 # env.read_env(root.path(".env.prod"))
 # 開発環境用
@@ -143,5 +142,17 @@ STATIC_FILE_DIRS = [BASE_DIR / "static"]  # 追加
 # 消費税
 TAX_RATE = 0.1
 
-STRIPE_API_SECRET_KEY = str(env.str("STRIPE_API_SECRET_KEY"))
-MY_URL = str(env.str("MY_URL"))
+STRIPE_API_SECRET_KEY: str = str(env.str("STRIPE_API_SECRET_KEY"))
+MY_URL: str = str(env.str("MY_URL"))
+
+
+# カスタムユーザーモデル
+AUTH_USER_MODEL = "base.User"
+
+LOGIN_URL = "/login/"
+
+LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_URL = "/logout/"
+
+LOGOUT_REDIRECT_URL = "/login/"
