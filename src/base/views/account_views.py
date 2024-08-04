@@ -1,10 +1,10 @@
-from typing_extensions import override
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from base.models import Profile
 from base.forms import UserCreationForm
+from django.contrib import messages
 
 
 class SignUpView(CreateView):
@@ -13,18 +13,21 @@ class SignUpView(CreateView):
     template_name = "pages/login_signup.html"
 
     def form_valid(self, form):
+        messages.success(
+            self.request, "新規登録が完了しました。続けてログインしてください。"
+        )
         return super().form_valid(form)
 
 
 class Login(LoginView):
     template_name = "pages/login_signup.html"
 
-    @override
     def form_valid(self, form):
+        messages.success(self.request, "ログインしました。")
         return super().form_valid(form)
 
-    @override
     def form_invalid(self, form):
+        messages.error(self.request, "エラーでログインできません。")
         return super().form_invalid(form)
 
 
