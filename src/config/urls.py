@@ -1,4 +1,3 @@
-# type-ignore
 from django.contrib import admin
 from django.urls import path
 from base import views
@@ -8,10 +7,13 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # Account
     path("login/", views.Login.as_view()),
-    path("signup/", views.SignUpView.as_view()),
     path("logout/", LogoutView.as_view()),
+    path("signup/", views.SignUpView.as_view()),
     path("account/", views.AccountUpdateView.as_view()),
     path("profile/", views.ProfileUpdateView.as_view()),
+    # Order
+    path("orders/<str:pk>/", views.OrderDetailView.as_view()),  # type: ignore
+    path("orders/", views.OrderIndexView.as_view()),  # type: ignore
     # Pay
     path("pay/checkout/", views.PayWithStripe.as_view()),
     path("pay/success/", views.PaySuccessView.as_view()),
